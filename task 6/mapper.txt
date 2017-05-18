@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+# Code adapted from labs
+
+import sys
+
+for line in sys.stdin:                  # input from standard input
+    line = line.strip()                 # remove whitespaces
+    tokens = line.split("\t")
+    words = tokens[0].split(" ")
+
+    print("{0}\t{1}\t{2}\t{3}".format(words[0],words[1],words[2],tokens[1]))

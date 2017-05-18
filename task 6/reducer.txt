@@ -1,0 +1,42 @@
+#!/usr/bin/python
+
+import sys
+import math
+
+context_dict={}
+curr_context = ""
+context_total = 0
+word1 = ""
+word2 = ""
+word3 = ""
+word4 = ""
+value = 0
+
+for line in sys.stdin:          # For ever line in the input from stdin
+    line = line.strip()         # Remove trailing characters
+    word1, word2, word3, value = line.split("\t")
+    value = int(value)
+
+    if curr_context == word1+" "+word2:
+        context_dict[word3] = value # Store in dictionary
+        context_total = context_total + value # Add value to running context_total 
+    else:
+        if curr_context:  # calculate entropy and write result to stdout
+            entropy = 0
+            for key, value2 in context_dict.items():
+                fraction = float(value2)/float(context_total)
+                entropy = entropy - ((fraction)*math.log(fraction,2))
+            print("{0}\t{1}".format(curr_context, entropy))
+
+        context_total = 0
+        context_dict={}
+        curr_context = word1+" "+word2
+        context_dict[word3] = value
+        context_total = context_total + value
+
+if curr_context == word1+" "+word2:  # Don't forget the last key/value pair
+   entropy = 0
+   for key, value2 in context_dict.items():
+       fraction = float(value2)/float(context_total)
+       entropy = entropy - ((fraction)*math.log(fraction,2))
+   print("{0}\t{1}".format(curr_context, entropy))

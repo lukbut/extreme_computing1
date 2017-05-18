@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+# Code adapted from labs
+
+import sys
+
+for line in sys.stdin:                  # input from standard input
+    line = line.strip()                 # remove whitespaces
+
+    if len(line) >= 1:                  # ignore empty lines because they're definitely not unique
+        print("{0}\t{1}".format(line,1))

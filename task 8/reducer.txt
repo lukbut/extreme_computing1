@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+import sys
+
+mark_dict={}
+
+prev_stud_id = 0
+stud_id = 0
+
+prev_name = ""
+name = ""
+
+ms = ""
+
+class_name = ""
+mark = 0
+
+for line in sys.stdin:          # For ever line in the input from stdin
+    line = line.strip()         # Remove trailing characters
+    count = line.count('\t')
+
+    if count==2:
+        stud_id,ms,name = line.split("\t")
+
+    if count==3:
+        stud_id,ms,class_name,mark = line.split("\t")
+
+    if prev_stud_id == 0:
+        prev_stud_id = stud_id
+
+    if prev_stud_id == stud_id:
+        if count==3:
+            mark_dict[class_name] = mark #Store in dictionary
+        if count==2:
+            prev_name = name
+    else:
+        if prev_name:  # collate the marks and write result to stdout
+            output = prev_name
+            mark_sum = 0
+            mark_count = 0
+            for key, value2 in mark_dict.items():
+                mark_sum = mark_sum + float(value2)
+                mark_count = mark_count + 1
+            if mark_count > 3:
+                average = (mark_sum/mark_count)
+                print("{0}\t{1}\t ".format(output, average))
+
+
+        prev_stud_id = stud_id
+        mark_dict={}
+        prev_name = ""
+
+        if count==3:
+            mark_dict[class_name] = mark #Store in dictionary
+        if count==2:
+            prev_name = name
+
+if prev_stud_id == stud_id:  # Don't forget the last key/value pair
+        if prev_name:  # collate the marks and write result to stdout
+            output = prev_name
+            mark_sum = 0
+            mark_count = 0
+            for key, value2 in mark_dict.items():
+                mark_sum = mark_sum + float(value2)
+                mark_count = mark_count + 1
+            if mark_count > 3:
+                average = (mark_sum/mark_count)
+                print("{0}\t{1}\t ".format(output, average))

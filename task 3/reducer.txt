@@ -1,0 +1,22 @@
+#!/usr/bin/python
+
+# Code adapted from labs
+
+import sys
+
+max_word_count = 0
+max_sentence_count = 0
+
+for line in sys.stdin:          # For ever line in the input from stdin
+    line = line.strip()         # Remove trailing characters
+    word_count, sentence_count = line.split("\t", 1)
+    word_count = int(word_count)
+    sentence_count = int(sentence_count)
+
+    if word_count > max_word_count:
+        max_word_count = word_count
+
+    if sentence_count > max_sentence_count:
+        max_sentence_count = sentence_count
+
+print("{0}\t{1}".format(max_word_count,max_sentence_count))

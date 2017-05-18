@@ -1,0 +1,21 @@
+#!/usr/bin/python
+
+# Code adapted from labs
+
+import sys
+
+longest_word_count = 0
+longest_sentence_count = 0
+
+for line in sys.stdin:                  # input from standard input
+    line = line.strip()                 # remove whitespaces
+    tokens = line.split()
+
+    if len(line) > longest_sentence_count:
+        longest_sentence_count = len(line)
+
+    for token in tokens:
+        if len(token) > longest_word_count:
+                longest_word_count = len(token)
+
+print("{0}\t{1}".format(longest_word_count,longest_sentence_count))

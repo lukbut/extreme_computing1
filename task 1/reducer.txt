@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import sys
+
+word = ""
+
+for line in sys.stdin:          # For ever line in the input from stdin
+    line = line.strip()         # Remove trailing character
+
+    print(line.upper())
+                           
